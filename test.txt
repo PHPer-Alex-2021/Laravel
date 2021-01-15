@@ -1,0 +1,62 @@
+yum -y install httpd httpd-manual mod_ssl mod_perl mod_auth_mysql
+
+systemctl start httpd.service
+
+wget http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm
+
+yum -y install mysql57-community-release-el7-10.noarch.rpm
+
+yum -y install mysql-community-server
+
+systemctl start mysqld.service
+
+systemctl status mysqld.service
+
+grep "password" /var/log/mysqld.log
+
+mysql -uroot -p
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'NewPassWord1.';
+
+create database wordpress; 
+
+yum -y install php php-mysql gd php-gd gd-devel php-xml php-common php-mbstring php-ldap php-pear php-xmlrpc php-imap
+
+echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
+
+systemctl restart httpd
+
+yum -y install wordpress
+
+
+2.    修改WordPress配置文件。
+
+1）执行如下命令，修改wp-config.php指向路径为绝对路径。
+
+# 进入/usr/share/wordpress目录。
+cd /usr/share/wordpress
+# 修改路径。
+ln -snf /etc/wordpress/wp-config.php wp-config.php
+# 查看修改后的目录结构。
+ll
+2）执行如下命令，移动wordpress到Apache根目录。
+
+# 在Apache的根目录/var/www/html下，创建一个wp-blog文件夹。
+mkdir /var/www/html/wp-blog
+mv * /var/www/html/wp-blog/
+3）执行以下命令修改wp-config.php配置文件。
+
+在执行命令前，请先替换以下三个参数值。
+
+database_name_here为之前步骤中创建的数据库名称，本示例为wordpress。
+username_here为数据库的用户名，本示例为root。
+password_here为数据库的登录密码，本示例为NewPassWord1.。
+sed -i 's/database_name_here/wordpress/' /var/www/html/wp-blog/wp-config.php
+sed -i 's/username_here/root/' /var/www/html/wp-blog/wp-config.php
+sed -i 's/password_here/NewPassWord1./' /var/www/html/wp-blog/wp-config.php
+4）执行以下命令，查看配置文件信息是否修改成功。
+
+cat -n /var/www/html/wp-blog/wp-config.php
+
+
+systemctl restart httpd
