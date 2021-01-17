@@ -9,58 +9,52 @@
                 </button>
                 @component('components.modal',['title'=>'添加角色','id'=>'addRole','url'=>"/admin/role"])
                     <div class="form-group">
-                        <label for="">用户名</label>
-                        <input type="text" name="name" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <label for="">角色名称</label>
+                        <input type="text" name="name" id="" class="form-control" placeholder="" value="{{old('name')}} "aria-describedby="helpId">
                     </div>
                     <div class="form-group">
-                        <label for="">描述</label>
-                        <input type="text" name="desc" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                        <label for="">角色标识</label>
+                        <input type="text" name="title" id="" class="form-control" placeholder="" value="{{old('title')}} "aria-describedby="helpId">
                     </div>
                 @endcomponent
 
-{{--                <form action="{{route('search')}}" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <div class="input-group col-lg-5  fa-pull-right"  style="width:30%;margin-top:30px;">--}}
-{{--                        <input type="text" class="form-control input-lg mr-3" name="keywords">--}}
-{{--                        <button type="submit" class="input-group-addon btn btn-primary">--}}
-{{--                            <i class="fas fa-search">搜索</i>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
             </div>
             <div class="card-body">
                 <table class="table table-striped">
                     <thead class="table table-success">
                         <tr>
                             <th>编号</th>
-                            <th>昵称</th>
-                            <th>邮箱</th>
+                            <th>角色名称</th>
+                            <th>角色标识</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody id="body">
-                        @foreach($users as $user)
+                        @foreach($roles as $role)
                             <tr>
-                                <td scope="row">{{$user['id']}}</td>
-                                <td scope="row">{{$user['name']}}</td>
-                                <td>{{$user['email']}}</td>
+                                <td scope="row">{{$role['id']}}</td>
+                                <td scope="row">{{$role['name']}}</td>
+                                <td>{{$role['title']}}</td>
+                                <td>{{$role['created_at']}}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="{{route('users.show',$user)}}"  type="button" class="btn btn-info mr-2">
-                                            <i class="fas fa-id-card">查看</i>
-                                        </a>
-                                        @can('update',$user)
-                                            <a href="{{route('users.edit',$user)}}" type="button" class="btn btn-success mr-2">
-                                            <i class="fas fa-edit">编辑</i>
-                                            </a>
-                                        @endcan
-                                        @can('delete',$user)
-                                            <form action="{{route('users.destroy',$user)}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">删除</button>
-                                            </form>
-                                        @endcan
+                                        <a class="btn btn-space btn-primary" href="{{route('admin.permission',$role['id'])}}">权限</a>
+                                        <button data-toggle="modal" data-target="#editRole{{$role['id']}}" type="button" class="btn btn-space btn-secondary">
+                                            编辑
+                                        </button>
+                                        <button class="btn btn-space btn-primary">删除</button>
+
+                                        @component('components.modal',['title'=>'编辑角色','id'=>"editRole{$role['id']}",'method'=>'PUT','url'=>"/admin/role/{$role['id']}"])
+                                            <div class="form-group">
+                                                <label for="">角色名称</label>
+                                                <input type="text" name="name" id="#editRole{{$role['id']}}" class="form-control" placeholder="" value="{{$role['name']}} "aria-describedby="helpId">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">角色标识</label>
+                                                <input type="text" name="title" id="" class="form-control" placeholder="" value="{{$role['title']}} "aria-describedby="helpId">
+                                            </div>
+                                        @endcomponent
                                     </div>
                                 </td>
                             </tr>

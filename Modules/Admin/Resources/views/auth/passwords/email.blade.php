@@ -27,7 +27,7 @@
                     </div>
                     <div class="card-body">
                         @include('layouts._message')
-                        @include('layouts._error')
+                        @include('layouts._validate')
                         <form action="{{ route('password.email') }}" method="post">
                             @csrf
                             {{--<p>别担心，我们会给你发邮件来重置你的密码。</p>--}}

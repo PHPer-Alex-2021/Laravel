@@ -6,6 +6,8 @@ use App\Http\Model\AdminUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Admin\Http\Requests\RoleRequest;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -17,8 +19,8 @@ class RoleController extends Controller
     {
 //        $all=app('hd-menu')->all();
 //        dd($all);
-        $users=AdminUser::all();
-        return view('admin::role.index',compact('users'));
+        $roles=Role::all();
+        return view('admin::role.index',compact('roles'));
     }
 
     /**
@@ -26,19 +28,13 @@ class RoleController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-
-        dd(222);
-    }
-
-    /**
-     * Show the specified resource.
-     * @return Response
-     */
-    public function show()
-    {
-        return view('admin::show');
+        $res=Role::create(['name'=>$request->name,'title'=>$request->title]);
+        if($res){
+            session()->flash('success','角色添加成功');
+            return back();
+        }
     }
 
     /**
@@ -46,8 +42,16 @@ class RoleController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function update(Request $request)
+    public function update(RoleRequest $request,Role $role)
     {
+
+        $res=$role->update(['name'=>$request->name,'title'=>$request->title]);
+        if($res){
+            session()->flash('success','角色修改成功');
+        }else{
+            session()->flash('danger','角色修改失败');
+        }
+        return back();
     }
 
     /**
@@ -57,4 +61,16 @@ class RoleController extends Controller
     public function destroy()
     {
     }
+
+    /**
+     *
+     * @return Response
+     */
+    public function permission(Role $role)
+    {
+//        dd($role->toArray());
+
+        return view('admin::role.permission',compact('role'));
+    }
+
 }

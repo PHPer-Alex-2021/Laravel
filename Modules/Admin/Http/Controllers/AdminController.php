@@ -10,6 +10,7 @@ class AdminController extends Controller
     //后台首页
     public function index()
     {
+//        dd(app('hd-menu')->all());
         return view('admin::Index.index');
     }
 

@@ -30,6 +30,8 @@ Route::group(['middleware' => ['web','auth:admin'], 'prefix' => 'admin', 'namesp
 //        ]
 //    ]);
 
+    //角色
     Route::resource('role', 'RoleController');
+    Route::get('role/permission/{role}', 'RoleController@permission')->name('admin.permission');
 
 });

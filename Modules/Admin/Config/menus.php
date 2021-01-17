@@ -13,21 +13,24 @@
  * permission 权限标识，必须在permission.php配置文件中存在
  */
 return [
-    'Admin'=>[
-        "title"      => "系统管理",
-        "icon"       => "fa fa-cog",
+    'Manager'=>[
+        "title"      => "管理",
+        "icon"       => "fa fa-book",
         'permission' => '权限标识',
         "menus"      => [
             ["title" => "用户列表", "permission" => "权限标识", "url" => "/admin/user"],
             ["title" => "角色列表", "permission" => "权限标识", "url" => "/admin/role"],
+            ['title' => '权限管理',"permission" => "权限标识", "url" => "/admin/permission"],
         ],
     ],
-    'Article'=>[
-        "title"      => "文章管理",
-        "icon"       => "fa fa-book",
+    'System'=>[
+        "title"      => "设置",
+        "icon"       => "fa fa-cog",
         'permission' => '权限标识',
         "menus"      => [
-            ["title" => "文章列表", "permission" => "权限标识", "url" => "/admin/user"],
+            ["title" => "网站配置", "permission" => "权限标识", "url" => "/admin/websit"],
+            ["title" => "微信配置", "permission" => "权限标识", "url" => "/admin/wechat"],
+            ['title' => '邮件配置',"permission" => "权限标识", "url" => "/admin/email"],
         ],
     ],
     'Support'=>[

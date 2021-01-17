@@ -29,7 +29,7 @@
                     <div class="card-body">
                         <form action="{{route('adminRegister')}}" method="post">
                             @csrf
-                            @include('Admin::layouts._error')
+                            @include('Admin::layouts._validate')
                             <span class="splash-title pb-4">注册帐号</span>
                             <div class="form-group">
                                 <input type="text" name="name" required="" placeholder="帐号" autocomplete="off" class="form-control">

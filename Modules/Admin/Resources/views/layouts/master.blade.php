@@ -189,6 +189,8 @@
     </div>
     <div class="be-content">
         <div class="main-content container-fluid">
+            @include('admin::layouts._validate')
+            @include('layouts.message')
             @yield('content')
         </div>
     </div>

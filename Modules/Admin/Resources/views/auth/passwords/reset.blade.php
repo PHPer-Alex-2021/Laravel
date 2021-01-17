@@ -27,7 +27,7 @@
                     </div>
                     <div class="card-body">
                         @include('layouts._message')
-                        @include('layouts._error')
+                        @include('layouts._validate')
                         <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">

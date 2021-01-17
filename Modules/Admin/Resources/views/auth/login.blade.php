@@ -30,7 +30,7 @@
                         <div class="card-body">
                             <form action="{{route('admin.login')}}" method="post">
                                 @csrf
-                                @include('admin::layouts._error')
+                                @include('admin::layouts._validate')
                                 <div class="login-form">
                                     <div class="form-group">
                                         <input id="email" type="email" name="email" placeholder="邮箱" autocomplete="off" class="form-control" value="{{old('email')}}" />

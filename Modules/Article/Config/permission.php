@@ -12,7 +12,12 @@ return [
     [
         'group' => '文章管理',
         'permissions' => [
-            ['title' => '添加栏目', 'name' => 'Modules\Admin\Http\Controllers\CategoryController@create', 'guard' => 'admin'],
+            ['title' => '栏目管理',
+                'name' => 'Article::category-article',
+                'guard' => 'admin'],
+            ['title' => '文章管理',
+                'name' => 'Article::article-manage',
+                'guard' => 'admin'],
         ],
     ],
 ];
